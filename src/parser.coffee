@@ -12,7 +12,7 @@ FILE_SUBJECT_SEGMENTS = ///
   \(\d+/(\d+)\)
   ///
 FILE_SUBJECT_FILENAME = ///
-  (&#34;|&#x22;)(.*?)(&#34;|&#x22;)
+  "(.*?)"
   ///
 GROUP = ///
   <group>
@@ -30,6 +30,7 @@ SEGMENT_BYTES = /// \b
 SEGMENT_NUMBER = /// \b
   number="(\d+)"
   ///i
+ENTITY = /&#(x?)(\d+);/g
 
 class Parser extends Events.EventEmitter
   constructor: (@options) ->
@@ -37,6 +38,11 @@ class Parser extends Events.EventEmitter
   
   log: (message) ->
     util.log message
+    
+  convertEntities: (str) ->
+    while entity = ENTITY.exec(str)
+      str = str.replace entity[0], String.fromCharCode(parseInt(entity[2], if entity[1] is 'x' then 16 else 10))
+    str
     
   fromFile: (path) ->
     fs.readFile(path, 'utf-8', (err, data) =>
@@ -52,7 +58,7 @@ class Parser extends Events.EventEmitter
     while file = FILE.exec(xml)
       item =
         parts: parseInt(FILE_SUBJECT_SEGMENTS.exec(file[2])[1], 10)
-        name: FILE_SUBJECT_FILENAME.exec(file[2])[2]
+        name: FILE_SUBJECT_FILENAME.exec(@convertEntities file[2])[1]
         groups: []
         segments: []
       
@@ -63,7 +69,7 @@ class Parser extends Events.EventEmitter
         item.segments.push
           bytes: parseInt(SEGMENT_BYTES.exec(segment[1])[1], 10)
           number: parseInt(SEGMENT_NUMBER.exec(segment[1])[1], 10)
-          message: '<' + segment[2] + '>'
+          message: '<' + @convertEntities(segment[2]) + '>'
       
       # sort segments by number
       item.segments.sort (a, b) ->
