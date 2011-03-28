@@ -1,0 +1,16 @@
+{
+  "name":         "node-nzb",
+  "description":  "node-based NZB downloader",
+  "version":      "0.0.1",
+  "author":       "Andy Kant <andy@andykant.com>",
+  "homepage":     "https://github.com/andykant/node-nzb",
+  "engines":      [ "node >= 0.5.0" ],
+  "main":         "./lib/nzb",
+  "directories":  {
+                    "lib":  "./lib"
+                  },
+  "repository":   {
+                    "type": "git",
+                    "url":  "https://github.com/andykant/node-nzb.git"
+                  }
+}

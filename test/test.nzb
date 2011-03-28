@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE nzb PUBLIC "-//newzBin//DTD NZB 0.9//EN" "http://www.newzbin.com/DTD/nzb/nzb-0.9.dtd">
+<nzb xmlns="http://www.newzbin.com/DTD/2003/nzb">
+  <file poster="Yenc@power-post.org" date="1301037908" subject="Ubuntu 10.10 Desktop I386 - &#x22;ubuntu-10.10-desktop-i386.par2&#x22; - [01/50] yEnc (1/1)">
+    <groups>
+      <group>alt.binaries.cd.image</group>
+      <group>alt.binaries.linux</group>
+    </groups>
+    <segments>
+      <segment bytes="70596" number="1">part1of1.Bkr&#x26;MLxMB4fUOQB5416J@powerpost2000AA.local</segment>
+    </segments>
+  </file>
+  <file poster="Yenc@power-post.org" date="1301037908" subject="Ubuntu 10.10 Desktop I386 - &#x22;ubuntu-10.10-desktop-i386.nfo&#x22; - [02/50] yEnc (1/1)">
+    <groups>
+      <group>alt.binaries.cd.image</group>
+      <group>alt.binaries.linux</group>
+    </groups>
+    <segments>
+      <segment bytes="1290" number="1">part1of1.jE6YCT7w2$4NEP11HQOG@powerpost2000AA.local</segment>
+    </segments>
+  </file>
+  <file poster="Yenc@power-post.org" date="1301037908" subject="Ubuntu 10.10 Desktop I386 - &#x22;ubuntu-10.10-desktop-i386.part01.rar&#x22; - [03/50] yEnc (01/61)">
+    <groups>
+      <group>alt.binaries.cd.image</group>
+      <group>alt.binaries.linux</group>
+    </groups>
+    <segments>
+      <segment bytes="249600" number="1">part1of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="2">part2of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="3">part3of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="4">part4of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="5">part5of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="6">part6of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="7">part7of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="8">part8of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="9">part9of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="10">part10of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="11">part11of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="12">part12of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="13">part13of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="14">part14of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="15">part15of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="16">part16of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="17">part17of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="18">part18of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="19">part19of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="20">part20of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="21">part21of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="22">part22of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="23">part23of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="24">part24of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="25">part25of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="26">part26of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="27">part27of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="28">part28of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="29">part29of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="30">part30of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="31">part31of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="32">part32of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="33">part33of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="34">part34of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="35">part35of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="36">part36of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="37">part37of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="38">part38of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="39">part39of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="40">part40of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="41">part41of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="42">part42of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="43">part43of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="44">part44of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="45">part45of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="46">part46of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="47">part47of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="48">part48of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="49">part49of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="50">part50of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="51">part51of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="52">part52of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="53">part53of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="54">part54of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="55">part55of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="56">part56of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="57">part57of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="58">part58of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="59">part59of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="249600" number="60">part60of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+      <segment bytes="24000" number="61">part61of61.TM4AxwSHgzXYB73wjh&#x26;j@powerpost2000AA.local</segment>
+    </segments>
+  </file>
+</nzb>
