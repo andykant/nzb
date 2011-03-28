@@ -1,9 +1,9 @@
 {
-  "name":         "node-nzb",
-  "description":  "node-based NZB downloader",
+  "name":         "nzb",
+  "description":  "Download Usenet/newsgroups content via NZB files.",
   "version":      "0.0.1",
   "author":       "Andy Kant <andy@andykant.com>",
-  "homepage":     "https://github.com/andykant/node-nzb",
+  "homepage":     "https://github.com/andykant/nzb",
   "engines":      [ "node >= 0.5.0" ],
   "main":         "./lib/nzb",
   "directories":  {
@@ -11,6 +11,6 @@
                   },
   "repository":   {
                     "type": "git",
-                    "url":  "https://github.com/andykant/node-nzb.git"
+                    "url":  "https://github.com/andykant/nzb.git"
                   }
 }
