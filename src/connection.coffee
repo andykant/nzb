@@ -5,8 +5,9 @@ util = require 'util'
     
 RESPONSE = /^(\d+)\s(.+?)$/
 LINE = /[\r\n]+/
+REST_OF_DATA = /[\r\n]+([\s\S]*)$/
 BREAK = '\r\n'
-EOF = /\r\n\.\r\n/
+EOF = /[\r\n]*\.[\r\n]+$/
 
 Codes =
   CAPABILITIES: 101
@@ -56,10 +57,9 @@ class Connection extends Events.EventEmitter
         if (response.code is Codes.RECEIVING_DATA or @receiving) and response.data
           # append the data
           @receiving = yes
-          data = response.data.toString()
-          @data.push data
+          @data.push response.data
           # check for the end of the file
-          if EOF.test data
+          if EOF.test response.data
             @receiving = no
             @emit 'segment', @selectedGroup, @message, @data.join('')
         else if response.code in Codes.CONNECTED
@@ -137,12 +137,14 @@ class Connection extends Events.EventEmitter
   
   # parse a socket data response
   parse: (data) ->
-    lines = data.toString().split(LINE)
+    data = data.toString()
+    lines = data.split(LINE)
     match = lines[0].match(RESPONSE)
+    code = match and parseInt(match[1], 10)
     
     return {
-      code: match and parseInt(match[1], 10)
-      data: (@receiving and data) or (match and lines.slice(1)) or data
+      code: code
+      data: (code is Codes.RECEIVING_DATA and data.match(REST_OF_DATA)[1]) or (@receiving and data) or (match and lines.slice(1)) or data
       message: match and match[2]
     }
   

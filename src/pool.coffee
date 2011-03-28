@@ -13,6 +13,7 @@ class Pool extends Events.EventEmitter
     
     # create connections
     @connections = []
+    @active = []
     for number in [1..@options.connections or 1]
       do =>
         # create a connection
@@ -48,14 +49,21 @@ class Pool extends Events.EventEmitter
     @parser.fromFile path
     
   process: (conn) ->
-    # add the connection to the waiting list if there isn't any work
+    # check for an empty queue
     if @queue.length is 0
-      @disconnect()
+      # remove the connection from the active pool
+      if conn and (index = @active.indexOf conn) >= 0
+        @active.splice index, 1
+      
+      # wait to disconnect until all connections are finished
+      if @active.length is 0
+        @disconnect()
       return
     
     # get a connection
-    if conn
+    if conn and @queue.length > 0
       item = @queue.shift()
+      @active.push conn if conn not in @active
       @log conn, 'GET', item.file.name, item.segment.message + ' (' + item.segment.number + '/' + item.file.parts + ')'
       conn.get(item.file.groups[0], item.segment.message)
   
