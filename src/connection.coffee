@@ -9,7 +9,7 @@ class Connection extends Events.EventEmitter
     @data = []
   
   log: (message) ->
-    util.log @options.host + ':' + @options.port + '#' + (@options.number or 0) + ' - ' + message
+    # util.log @options.host + ':' + @options.port + '#' + (@options.number or 0) + ' - ' + message
     
   # connect to the server
   connect: ->
@@ -46,7 +46,13 @@ class Connection extends Events.EventEmitter
           # check for the end of the file
           if EOF.test response.data
             @receiving = no
-            @emit 'segment', @selectedGroup, @message, @data.join('')
+            # make references in case these properties get overwritten
+            group = @selectedGroup
+            message = @message
+            data = @data.join('')
+            callback = @callback
+            @emit 'segment', group, message, data
+            callback data if callback
         # successfully connected to the server
         else if response.code in Codes.CONNECTED
           # need to authenticate if credentials were included
@@ -71,7 +77,7 @@ class Connection extends Events.EventEmitter
           @selectedGroup = @selectingGroup
           @selectingGroup = null
           # now that the group was selected, re-attempt the message retrieval
-          @get @selectedGroup, @message if @message
+          @get @selectedGroup, @message, @callback if @message
       socket.on 'end', =>
         @log 'end'
         @disconnect()
@@ -122,10 +128,11 @@ class Connection extends Events.EventEmitter
     @socket.write('GROUP ' + group)
   
   # retrieve an article
-  get: (group, message) ->
+  get: (group, message, callback) ->
     return if not @ready
     
     @message = message
+    @callback = callback or null
     if not @group or @selectedGroup isnt group
       @selectingGroup = group
       @group group
@@ -153,6 +160,9 @@ class Connection extends Events.EventEmitter
     @authenticating = no
     @authenticated = no
     @receiving = no
+    @selectedGroup = null
+    @message = null
+    @callback = null
     @data = []
     @socket.destroy() if @socket
     @socket = null

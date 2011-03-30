@@ -17,16 +17,18 @@ class Parser extends Events.EventEmitter
   fromFile: (path) ->
     fs.readFile(path, 'utf-8', (err, data) =>
       throw err if err
-      @fromString data
+      @fromString data, path
     )
     
-  fromString: (xml) ->
+  fromString: (xml, path) ->
     model =
+      path: path or null
       title: ''
       files: []
       
     while file = FILE.exec(xml)
       item =
+        size: 0
         parts: parseInt(FILE_SUBJECT_SEGMENTS.exec(file[2])[1], 10)
         name: FILE_SUBJECT_FILENAME.exec(@convertEntities file[2])[1]
         groups: []
@@ -36,10 +38,13 @@ class Parser extends Events.EventEmitter
         item.groups.push group[1]
         
       while segment = SEGMENT.exec(file[3])
+        bytes = parseInt(SEGMENT_BYTES.exec(segment[1])[1], 10)
+        item.size += bytes
         item.segments.push
-          bytes: parseInt(SEGMENT_BYTES.exec(segment[1])[1], 10)
+          bytes: bytes
           number: parseInt(SEGMENT_NUMBER.exec(segment[1])[1], 10)
           message: '<' + @convertEntities(segment[2]) + '>'
+          data: null
       
       # sort segments by number
       item.segments.sort (a, b) ->
