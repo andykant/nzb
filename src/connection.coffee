@@ -2,22 +2,6 @@ Events = require 'events'
 tls = require 'tls'
 net = require 'net'
 util = require 'util'
-    
-RESPONSE = /^(\d+)\s(.+?)$/
-LINE = /[\r\n]+/
-REST_OF_DATA = /[\r\n]+([\s\S]*)$/
-BREAK = '\r\n'
-EOF = /[\r\n]*\.[\r\n]+$/
-
-Codes =
-  CAPABILITIES: 101
-  CONNECTED: [200, 201]
-  GROUP_SELECTED: 211
-  RECEIVING_DATA: 222
-  AUTHENTICATED: 281
-  PASSWORD_REQUIRED: 381
-  ARTICLE_NOT_FOUND: 430
-  TOO_MANY_CONNECTIONS: 502
 
 class Connection extends Events.EventEmitter
   constructor: (@options) ->
@@ -30,30 +14,31 @@ class Connection extends Events.EventEmitter
   # connect to the server
   connect: ->
     return @socket if @socket or @connecting
-    @connecting = yes
     
-    # ready state helper
+    # updates the state of the connection to ready for requests
     ready = =>
       @ready = yes
       @log 'ready'
       @emit 'ready'
     
-    # set up socket listeners helper
+    # wires up socket listeners and helpers
     listen = (socket) =>
+      # override the write method so that we can log requests
       socket.write = (request) =>
         logged = request.substr(0, request.length - 2)
         logged = logged.split(' ').slice(0, 2).join(' ') + ' ********' if logged.match(/^AUTHINFO/)
         @log 'REQUEST: ' + logged
-        socket.__proto__.write.call(socket, request)
+        socket.__proto__.write.call(socket, request + BREAK)
+      # track when the server connects
       socket.on 'connect', =>
         @connected = yes
         @log 'connect'
-        # socket.setEncoding('utf-8')
+      # handle data responses
       socket.on 'data', (data) =>
         response = @parse data
         @log 'response: ' + response.code + ' - ' + response.message if response.code?
         
-        # receiving data takes priority since it sometimes messes up responses
+        # check for receiving data first since they don't include a response code past the first buffer
         if (response.code is Codes.RECEIVING_DATA or @receiving) and response.data
           # append the data
           @receiving = yes
@@ -62,26 +47,31 @@ class Connection extends Events.EventEmitter
           if EOF.test response.data
             @receiving = no
             @emit 'segment', @selectedGroup, @message, @data.join('')
+        # successfully connected to the server
         else if response.code in Codes.CONNECTED
+          # need to authenticate if credentials were included
           if @options.username
             @authenticate()
           else
             ready()
+        # authenticated the user, but still need a password
         else if @authenticating and response.code is Codes.PASSWORD_REQUIRED
           @authenticate()
+        # successfully authenticated the user (and password if applicable)
         else if response.code is Codes.AUTHENTICATED
           @authenticating = no
           @authenticated = yes
           ready()
+        # handle a list of capabilities (mainly for debugging)
         else if response.code is Codes.CAPABILITIES
           @log 'capabilities: \r\n' + response.data.join(BREAK)
           @emit 'capabilities', response.data
+        # group successfully selected (needed to retrieve body content)
         else if response.code is Codes.GROUP_SELECTED
           @selectedGroup = @selectingGroup
           @selectingGroup = null
+          # now that the group was selected, re-attempt the message retrieval
           @get @selectedGroup, @message if @message
-        # else if response.data
-        #   @log 'data: \r\n' + response.data.join(BREAK)
       socket.on 'end', =>
         @log 'end'
         @disconnect()
@@ -93,9 +83,11 @@ class Connection extends Events.EventEmitter
         @disconnect()
     
     # open the connection
+    @connecting = yes
     @log 'open'
     if @options.secure
       @socket = listen tls.connect(@options.port, @options.host, =>
+        # emulate the connect/error events that an insecure socket would emit
         if @socket.authorized
           @socket.emit 'connect'
         else
@@ -103,37 +95,42 @@ class Connection extends Events.EventEmitter
       )
     else
       @socket = listen net.createConnection(@options.port, @options.host)
+    return @socket
   
   # authenticate with the username/password
   authenticate: ->
     return if not @connected or @authenticated or not @options.username
+    
     if not @authenticating
       @authenticating = yes
-      @socket.write('AUTHINFO USER ' + @options.username + BREAK)
+      @socket.write('AUTHINFO USER ' + @options.username)
     else
       @authenticating = no
-      @socket.write('AUTHINFO PASS ' + @options.password + BREAK)
+      @socket.write('AUTHINFO PASS ' + @options.password)
   
-  # retrieve the capabilities for the active session 
+  # retrieve the capabilities for the active session (mainly for debugging sessions)
   capabilities: ->
     return if not @ready
-    @socket.write('CAPABILITIES' + BREAK)
+    
+    @socket.write('CAPABILITIES')
   
   # select a newsgroup
   group: (group)->
     return if not @ready
+    
     @selectedGroup = null
-    @socket.write('GROUP ' + group + BREAK)
+    @socket.write('GROUP ' + group)
   
   # retrieve an article
   get: (group, message) ->
     return if not @ready
+    
     @message = message
     if not @group or @selectedGroup isnt group
       @selectingGroup = group
       @group group
     else
-      @socket.write('BODY ' + @message + BREAK)
+      @socket.write('BODY ' + @message)
   
   # parse a socket data response
   parse: (data) ->
@@ -159,5 +156,23 @@ class Connection extends Events.EventEmitter
     @data = []
     @socket.destroy() if @socket
     @socket = null
+
+# expressions used for parsing responses
+RESPONSE = /^(\d+)\s(.+?)$/
+LINE = /[\r\n]+/
+REST_OF_DATA = /[\r\n]+([\s\S]*)$/
+EOF = /[\r\n]*\.[\r\n]+$/
+BREAK = '\r\n'
+
+# response codes
+Codes =
+  CAPABILITIES: 101
+  CONNECTED: [200, 201]
+  GROUP_SELECTED: 211
+  RECEIVING_DATA: 222
+  AUTHENTICATED: 281
+  PASSWORD_REQUIRED: 381
+  ARTICLE_NOT_FOUND: 430
+  TOO_MANY_CONNECTIONS: 502
     
 exports.Connection = Connection

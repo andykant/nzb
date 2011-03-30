@@ -2,36 +2,6 @@ Events = require 'events'
 util = require 'util'
 fs = require 'fs'
 
-# regular expressions used for parsing the NZB XML document
-FILE = ///
-  <file .*? ( subject="(.*?)" ) .*? >
-    ([\s\S]*?)
-  </file>
-  ///ig
-FILE_SUBJECT_SEGMENTS = ///
-  \(\d+/(\d+)\)
-  ///
-FILE_SUBJECT_FILENAME = ///
-  "(.*?)"
-  ///
-GROUP = ///
-  <group>
-    (.*?)
-  </group>
-  ///ig
-SEGMENT = ///
-  <segment (.*?)>
-    (.*?)
-  </segment>
-  ///ig
-SEGMENT_BYTES = /// \b
-  bytes="(\d+)"
-  ///i
-SEGMENT_NUMBER = /// \b
-  number="(\d+)"
-  ///i
-ENTITY = /&#(x?)(\d+);/g
-
 class Parser extends Events.EventEmitter
   constructor: (@options) ->
     @options or= {}
@@ -42,7 +12,7 @@ class Parser extends Events.EventEmitter
   convertEntities: (str) ->
     while entity = ENTITY.exec(str)
       str = str.replace entity[0], String.fromCharCode(parseInt(entity[2], if entity[1] is 'x' then 16 else 10))
-    str
+    return str
     
   fromFile: (path) ->
     fs.readFile(path, 'utf-8', (err, data) =>
@@ -92,5 +62,35 @@ class Parser extends Events.EventEmitter
         0
     
     @emit 'parse', model
+    
+# regular expressions used for parsing the NZB XML document
+FILE = ///
+  <file .*? ( subject="(.*?)" ) .*? >
+    ([\s\S]*?)
+  </file>
+  ///ig
+FILE_SUBJECT_SEGMENTS = ///
+  \(\d+/(\d+)\)
+  ///
+FILE_SUBJECT_FILENAME = ///
+  "(.*?)"
+  ///
+GROUP = ///
+  <group>
+    (.*?)
+  </group>
+  ///ig
+SEGMENT = ///
+  <segment (.*?)>
+    (.*?)
+  </segment>
+  ///ig
+SEGMENT_BYTES = /// \b
+  bytes="(\d+)"
+  ///i
+SEGMENT_NUMBER = /// \b
+  number="(\d+)"
+  ///i
+ENTITY = /&#(x?)(\d+);/g
   
 exports.Parser = Parser
