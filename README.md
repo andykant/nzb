@@ -3,8 +3,7 @@
 NZB is a Node.js library used for downloading content from Usenet/newsgroups via NZB files.
 
 ## Dependencies
-* buffertools (bnoordhuis/node-buffertools)
-	npm install buffertools
+* [buffertools](https://github.com/bnoordhuis/node-buffertools): `npm install buffertools`
 
 ## Warning
 
