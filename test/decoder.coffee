@@ -4,6 +4,7 @@ util = require 'util'
 exec = require('child_process').exec
 NZB = require '../src/nzb'
 
+LINE = /[\r\n]+/
 decoder = new NZB.Decoder
 
 fs.readFile './test/fixtures/yenc_single.ntx', (err, data) ->
