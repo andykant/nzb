@@ -1,6 +1,7 @@
 Events = require 'events'
 util = require 'util'
 fs = require 'fs'
+buffertools = require 'buffertools'
 
 class Decoder extends Events.EventEmitter
   constructor: (@options) ->
@@ -36,7 +37,7 @@ class Decoder extends Events.EventEmitter
         index = i + 1
     
     # capture the encoded data
-    data = []
+    data = null
     capturing = no
     for lineBuffer in lines
       line = lineBuffer.toString()
@@ -45,9 +46,9 @@ class Decoder extends Events.EventEmitter
       
       # capture actual data
       if capturing and not line.match(/^=y(begin|part)/)
-        data = data.concat(@decodeLine lineBuffer)
+        data = if not data then lineBuffer else data.concat(lineBuffer)
     
-    return new Buffer(data)
+    return new Buffer(@decodeLine data)
   
   # returns an array instead of a buffer
   decodeLine: (buffer) ->
@@ -61,6 +62,7 @@ class Decoder extends Events.EventEmitter
       else
         decoded.push (buffer[i] + 256 - 42) % 256
     
+    util.log decoded.length
     return decoded
     
 Encoding =
