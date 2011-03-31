@@ -5,6 +5,9 @@
   "author":       "Andy Kant <andy@andykant.com>",
   "homepage":     "https://github.com/andykant/nzb",
   "engines":      [ "node >= 0.5.0" ],
+  "dependencies": {
+                    "buffertools": ">= 1.0.1"
+                  },
   "main":         "./lib/nzb",
   "directories":  {
                     "lib":  "./lib"
