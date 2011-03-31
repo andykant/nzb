@@ -8,5 +8,5 @@ parser.on 'parse', (model) ->
     util.log 'FILE: ' + file.name + ' (' + file.parts + ' parts, ' + file.size + ' bytes)'
     util.log '  GROUPS: ' + file.groups.join(', ')
     util.log '    SEGMENT ' + segment.number + ' (' + segment.bytes + '): ' + segment.message for segment in file.segments
-parser.fromFile './test/test.nzb'
+parser.fromFile './test/fixtures/test.nzb'
  

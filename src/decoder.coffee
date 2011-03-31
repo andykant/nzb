@@ -19,12 +19,19 @@ class Decoder extends Events.EventEmitter
     
     for segment in file.segments
       if segment.data
-        output.write segment.data
+        output.write @decodeSegment(segment.data)
       else
         util.log 'MISSING DATA'
-    
     output.end()
     
     return path
+    
+  decodeSegment: (data) ->
+    # for line in data
+    return data
+    
+Encoding =
+  UNKNOWN: 0
+  YENC: 1
     
 exports.Decoder = Decoder

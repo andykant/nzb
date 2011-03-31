@@ -49,7 +49,7 @@ class Connection extends Events.EventEmitter
             # make references in case these properties get overwritten
             group = @selectedGroup
             message = @message
-            data = @data.join('')
+            data = @data
             callback = @callback
             @emit 'segment', group, message, data
             callback data if callback

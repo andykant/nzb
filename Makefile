@@ -4,6 +4,9 @@ dev: has-coffee
 test: has-coffee
 	@find test -name '*.coffee' | xargs -n 1 -t coffee
 	
+test-decoder: has-coffee
+	@coffee test/decoder.coffee
+	
 test-pool: has-coffee
 	@coffee test/pool.coffee
 	
