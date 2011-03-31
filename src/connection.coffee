@@ -41,15 +41,18 @@ class Connection extends Events.EventEmitter
         # check for receiving data first since they don't include a response code past the first buffer
         if (response.code is Codes.RECEIVING_DATA or @receiving) and response.data
           # append the data
-          @receiving = yes
-          @data.push response.data
+          if response.code is Codes.RECEIVING_DATA
+            @data = []
+            @receiving = yes
+          @data = @data.concat bufferToArray(response.data)
+          
           # check for the end of the file
           if EOF.test response.data
             @receiving = no
             # make references in case these properties get overwritten
             group = @selectedGroup
             message = @message
-            data = @data
+            data = new Buffer(@data)
             callback = @callback
             @emit 'segment', group, message, data
             callback data if callback
@@ -141,14 +144,13 @@ class Connection extends Events.EventEmitter
   
   # parse a socket data response
   parse: (data) ->
-    data = data.toString()
-    lines = data.split(LINE)
+    lines = data.toString().split(LINE)
     match = lines[0].match(RESPONSE)
     code = match and parseInt(match[1], 10)
     
     return {
       code: code
-      data: (code is Codes.RECEIVING_DATA and data.match(REST_OF_DATA)[1]) or (@receiving and data) or (match and lines.slice(1)) or data
+      data: ((code is Codes.RECEIVING_DATA or @receiving) and data) or (match and lines.slice(1)) or data.toString()
       message: match and match[2]
     }
   
@@ -184,5 +186,12 @@ Codes =
   PASSWORD_REQUIRED: 381
   ARTICLE_NOT_FOUND: 430
   TOO_MANY_CONNECTIONS: 502
+  
+# convert a buffer to an array
+bufferToArray = (buffer) ->
+  arr = new Array(buffer.length)
+  for i in [0..buffer.length - 1]
+    arr[i] = buffer[i]
+  return arr
     
 exports.Connection = Connection
