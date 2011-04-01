@@ -1,7 +1,7 @@
 {
   "name":         "nzb",
   "description":  "Download Usenet/newsgroups content via NZB files.",
-  "version":      "0.0.1",
+  "version":      "0.1.0",
   "author":       "Andy Kant <andy@andykant.com>",
   "homepage":     "https://github.com/andykant/nzb",
   "engines":      [ "node >= 0.5.0" ],
