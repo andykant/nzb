@@ -2,7 +2,7 @@ Events = require 'events'
 tls = require 'tls'
 net = require 'net'
 util = require 'util'
-require 'buffertools'
+buffertools = require 'buffertools'
 
 class Connection extends Events.EventEmitter
   constructor: (@options) ->
@@ -43,10 +43,10 @@ class Connection extends Events.EventEmitter
         if (response.code is Codes.RECEIVING_DATA or @receiving) and response.data
           # append the data
           if response.code is Codes.RECEIVING_DATA
-            @data = response.data
+            @data = [response.data]
             @receiving = yes
           else
-            @data = @data.concat response.data
+            @data.push response.data
           
           # check for the end of the file
           if EOF.test response.data
@@ -54,7 +54,7 @@ class Connection extends Events.EventEmitter
             # make references in case these properties get overwritten
             group = @selectedGroup
             message = @message
-            data = @data
+            data = buffertools.concat.apply(buffertools, @data)
             callback = @callback
             @emit 'segment', group, message, data
             callback data if callback
