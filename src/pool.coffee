@@ -79,7 +79,8 @@ class Pool extends Events.EventEmitter
         
   decodeFile: (file) ->
     util.log 'TIME TO DECODE: ' + file.name + ' TO ' + file.directory + file.name
-    @decoder.decode file
+    path = @decoder.decode file
+    @emit 'file', path, file
   
   connect: ->
     conn.connect() for conn in @connections

@@ -51,7 +51,7 @@ class Decoder extends Events.EventEmitter
       capturing = no
       for lineBuffer in lines
         line = lineBuffer.toString()
-        if not capturing and (match = line.match(YEnc.BEGIN))
+        if not capturing and (match = line.match(/^=ybegin/))
           capturing = yes
           lineSize = parseInt(match[3], 10)
         else if match = line.match(YEnc.END)
@@ -89,7 +89,7 @@ class Decoder extends Events.EventEmitter
     
       lineSize = null
       if match = begin.toString().match(YEnc.BEGIN)
-        lineSize = parseInt(match[2], 10)
+        lineSize = parseInt(match[3], 10)
     
       partSize = null
       if match = end.toString().match(YEnc.END)
@@ -162,9 +162,9 @@ Encoding =
   YENC: 1
 
 YEnc = 
-  BEGIN: /=ybegin part=(\d+) line=(\d+) size=(\d+) name=(.+)/
+  BEGIN: /=ybegin (part=(\d+))? line=(\d+) size=(\d+) name=(.+)/
   PART: /=ypart begin=(\d+) end=(\d+)/
-  END: /=yend size=(\d+) part=(\d+) pcrc32=([a-z0-9]+)/
+  END: /=yend size=(\d+) (part=(\d+))? (pcrc32=([a-z0-9]+))?/
   ESCAPED: [64+0, 64+9, 64+10, 64+13, 64+27, 64+32, 64+46, 64+61]
   
 LINEBREAKS = [0x0D, 0x0A]
