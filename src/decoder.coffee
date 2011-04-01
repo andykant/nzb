@@ -61,7 +61,7 @@ class Decoder extends Events.EventEmitter
         # capture actual data
         if capturing and not line.match(/^=y/)
           if lineBuffer[0] is 0x2E and lineBuffer[1] is 0x2E
-            data.push lineBuffer.slice(1, lineBuffer.length)
+            data.push lineBuffer.slice(1)
           else
             data.push lineBuffer
     
@@ -69,15 +69,15 @@ class Decoder extends Events.EventEmitter
     # method 2 is fast but fails
     # method 3 is extremely slow but is successful
     else if method in [2,3]
-      buff = buffer.slice(index = @indexOf(buffer, '=ybegin'), buffer.length)
+      buff = buffer.slice(index = @indexOf(buffer, '=ybegin'))
       begin = buffer.slice(index, index = @indexOf(buff, CRLF) + index + 2)
-      buff = buffer.slice(index, buffer.length)
+      buff = buffer.slice(index)
       if (index2 = @indexOf(buff, '=ypart')) > -1
-        buff = buffer.slice(index = index2 + index, buffer.length)
+        buff = buffer.slice(index = index2 + index)
         part = buffer.slice(index, index = @indexOf(buff, CRLF) + index + 2)
-        buff = buffer.slice(index, buffer.length)
+        buff = buffer.slice(index)
       data = buffer.slice(index, index = @indexOf(buff, '=yend') + index)
-      buff = buffer.slice(index, buffer.length)
+      buff = buffer.slice(index)
       end = buffer.slice(index, index = @indexOf(buff, CRLF) + index + 2)
     
       # util.log begin
@@ -119,7 +119,7 @@ class Decoder extends Events.EventEmitter
       # this method is incredibly slow, but works
       else if not lineSize or method is 3
         index = 0
-        while index < data.length - 1 and (index2 = @indexOf(data.slice(index, data.length), CRLF)) > -1
+        while index < data.length - 1 and (index2 = @indexOf(data.slice(index), CRLF)) > -1
           # check for lines starting with a double-dot ("..")
           start = if data[index] is 0x2E and data[index+1] is 0x2E then index + 1 else index
         
