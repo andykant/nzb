@@ -26,16 +26,16 @@ task 'test', 'Run all tests', ->
   invoke 'test-pool'
 
 task 'test-connection', 'Run connection tests', ->
-  brew 'test/connection-test.coffee'
+  brew 'test/connection.coffee'
   
 task 'test-decoder', 'Run decoder tests', ->
-  brew 'test/decoder-test.coffee'
+  brew 'test/decoder.coffee'
   
 task 'test-downloader', 'Run downloader tests', ->
-  brew 'test/downloader-test.coffee'
+  brew 'test/downloader.coffee'
   
 task 'test-parser', 'Run parser tests', ->
-  brew 'test/parser-test.coffee'
+  brew 'test/parser.coffee'
   
 task 'test-pool', 'Run pool tests', ->
-  brew 'test/pool-test.coffee'
+  brew 'test/pool.coffee'
