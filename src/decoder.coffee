@@ -161,10 +161,16 @@ Encoding =
   UNKNOWN: 0
   YENC: 1
 
-YEnc = 
-  BEGIN: /=ybegin (part=(\d+))? line=(\d+) size=(\d+) name=(.+)/
-  PART: /=ypart begin=(\d+) end=(\d+)/
-  END: /=yend size=(\d+) (part=(\d+))? (pcrc32=([a-z0-9]+))?/
+YEnc =
+  BEGIN: ///
+    =ybegin (part=(\d+))? line=(\d+) size=(\d+) name=(.+)
+  ///
+  PART: ///
+    =ypart begin=(\d+) end=(\d+)
+  ///
+  END: ///
+    =yend size=(\d+) (part=(\d+))? (pcrc32=([a-z0-9]+))?
+  ///
   ESCAPED: [64+0, 64+9, 64+10, 64+13, 64+27, 64+32, 64+46, 64+61]
   
 LINEBREAKS = [0x0D, 0x0A]
