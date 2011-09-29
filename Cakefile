@@ -2,7 +2,7 @@
 {spawn} = require 'child_process'
 
 brew = (options) ->
-  options = [options] if not options instanceof Array
+  options = [options] if not (options instanceof Array)
   coffee = spawn 'coffee', options
   coffee.stdout.on 'data', (data) -> print data.toString()
   coffee.stderr.on 'data', (data) -> print data.toString()

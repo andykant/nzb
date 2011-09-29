@@ -5,7 +5,7 @@ Events = require 'events'
 nzb =
   Connection: require('./connection').Connection
   Decoder: require('./decoder').Decoder
-  Downloader: require('./connection').Downloader
+  Downloader: require('./downloader').Downloader
   Parser: require('./parser').Parser
   Pool: require('./pool').Pool
 

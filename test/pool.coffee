@@ -1,9 +1,9 @@
 config = require './config'
-NZB = require '../src/nzb'
+nzb = require '../src/nzb'
 fs = require 'fs'
 util = require 'util'
 
-pool = new NZB.Pool(config.pool)
+pool = new nzb.Pool(config.pool)
 
 results = []
 pool.on 'file', (path, file) ->

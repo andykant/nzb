@@ -1,8 +1,8 @@
 util = require 'util'
 config = require './config'
-NZB = require '../src/nzb'
+nzb = require '../src/nzb'
 
-parser = new NZB.Parser
+parser = new nzb.Parser
 parser.on 'parse', (model) ->
   for file in model.files
     util.log 'FILE: ' + file.name + ' (' + file.parts + ' parts, ' + file.size + ' bytes)'
