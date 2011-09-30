@@ -7,6 +7,7 @@ nzb = require '../src/nzb'
 
 vows.describe('NZB')
   .addBatch(
+  
     'when loading the NZB library':
       topic: nzb
       'should expose a singleton Downloader instance API': (topic) ->
@@ -21,5 +22,6 @@ vows.describe('NZB')
         assert.isFunction topic.Downloader
         assert.isFunction topic.Parser
         assert.isFunction topic.Pool
+        
   )
   .export(module)
