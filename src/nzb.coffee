@@ -9,10 +9,7 @@ nzb =
   Parser: require('./parser').Parser
   Pool: require('./pool').Pool
 
+# Export a singleton instance of the downloader along with the child classes
+module.exports = new nzb.Downloader
 for prop, value of nzb
-  exports[prop] = value
-
-# Export a singleton downloader
-downloader = new nzb.Downloader
-for method of ['add','configure','move','remove','status']
-  exports[method] = -> downloader[method].apply(arguments)
+  module.exports[prop] = value

@@ -1,16 +1,22 @@
 {print} = require 'sys'
 {spawn} = require 'child_process'
 
-brew = (options) ->
+exec = (command, options) ->
   options = [options] if not (options instanceof Array)
-  coffee = spawn 'coffee', options
-  coffee.stdout.on 'data', (data) -> print data.toString()
-  coffee.stderr.on 'data', (data) -> print data.toString()
+  cmd = spawn command, options
+  cmd.stdout.on 'data', (data) -> print data.toString()
+  cmd.stderr.on 'data', (data) -> print data.toString()
+  
+brew = (options) ->
+  exec 'coffee', options
 
 build = (watch) ->
   options = ['-c', '-o', 'lib', 'src']
   options.unshift '-w' if watch
   brew options
+
+test = (suite) ->
+  exec 'vows', 'test/' + suite
 
 task 'build', 'Compile source code', ->
   build()
@@ -22,20 +28,24 @@ task 'test', 'Run all tests', ->
   invoke 'test-connection'
   invoke 'test-decoder'
   invoke 'test-downloader'
+  invoke 'test-nzb'
   invoke 'test-parser'
   invoke 'test-pool'
 
 task 'test-connection', 'Run connection tests', ->
-  brew 'test/connection.coffee'
+  test 'connection'
   
 task 'test-decoder', 'Run decoder tests', ->
-  brew 'test/decoder.coffee'
+  test 'decoder'
   
 task 'test-downloader', 'Run downloader tests', ->
-  brew 'test/downloader.coffee'
+  test 'downloader'
+  
+task 'test-nzb', 'Run base library tests', ->
+  test 'nzb'
   
 task 'test-parser', 'Run parser tests', ->
-  brew 'test/parser.coffee'
+  test 'parser'
   
 task 'test-pool', 'Run pool tests', ->
-  brew 'test/pool.coffee'
+  test 'pool'
