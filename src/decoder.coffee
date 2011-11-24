@@ -175,5 +175,35 @@ YEnc =
   
 LINEBREAKS = [0x0D, 0x0A]
 CRLF = '\r\n'
+
+# http://en.wikipedia.org/wiki/KMP_algorithm
+kmp_tables = {}
+kmp_search = (haystack, needle) ->
+  # compute/cache the lookup table for this needle
+  lookup = kmp_tables[needle] = kmp_tables[needle] || (->
+      [pos, sub, table] = [2, 0, [-1, 0]]
+      while pos < needle.length
+        if needle[pos-1] == needle[sub]
+          sub++
+          table[pos] = sub
+          pos++
+        else if sub > 0
+          sub = table[sub]
+        else
+          table[pos] = 0
+          pos++
+      return table
+    )()
+  
+  # search for the needle in the haystack
+  [match, index] = [0, 0]
+  while match+index < haystack.length
+    if needle[index] == haystack[match+index]
+      return match if index == needle.length - 1
+      index++
+    else
+      match = match + index - lookup[index]
+      index = if lookup[index] > -1 then lookup[index] else 0
+  return -1
     
 exports.Decoder = Decoder
