@@ -24,6 +24,9 @@ task 'build', 'Compile source code', ->
 task 'dev', 'Compile source code (watch)', ->
   build(true)
 
+task 'benchmark', 'Benchmarks the library', ->
+  brew ['test/benchmark.coffee']
+
 task 'test', 'Run all tests', ->
   invoke 'test-connection'
   invoke 'test-decoder'
