@@ -6,7 +6,7 @@ exec = require('child_process').exec
 buffertools = require 'buffertools'
 
 # set up test variables
-BENCHMARK_SIZE_MB = 5
+BENCHMARK_SIZE_MB = 50
 buffer = []
 input = fs.createReadStream './test/fixtures/decoder_encoded.bin', 
   flags: 'r'
